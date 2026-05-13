@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3y508ivagkm3"]
+[gd_scene load_steps=8 format=3 uid="uid://d3y508ivagkm3"]
 
 [ext_resource type="Material" uid="uid://dyj3olp740hx7" path="res://resources/main.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://23d51xbyhls0" path="res://scripts/hurtbox.gd" id="2_sugp2"]
+[ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
 
 [sub_resource type="Environment" id="Environment_o5qli"]
 background_mode = 1
@@ -16,8 +16,14 @@ fog_light_color = Color(0.38855848, 0.50210077, 0.98280936, 1)
 fog_height = 1.0
 fog_height_density = 0.5
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_sugp2"]
-height = 6.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wfyh"]
+albedo_color = Color(0.7615476, 1.1647642e-05, 0.5124568, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sugp2"]
+albedo_color = Color(0.09143998, 0.05940001, 0.54, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
+albedo_color = Color(0.85164, 0.94, 0.49819997, 1)
 
 [node name="main" type="Node3D"]
 
@@ -28,88 +34,37 @@ environment = SubResource("Environment_o5qli")
 transform = Transform3D(0.44931898, -0.80227214, 0.3930291, 0, 0.4399392, 0.89802754, -0.8933714, -0.40350083, 0.19767304, 0, 27.2, -0.29999924)
 shadow_enabled = true
 
-[node name="floor" type="CSGBox3D" parent="."]
-use_collision = true
-size = Vector3(20, 0, 20)
-
-[node name="Building" type="CSGCombiner3D" parent="."]
-use_collision = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -9.9)
-use_collision = true
-size = Vector3(20, 6, 0.5)
-material = ExtResource("1_0wfyh")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Building"]
-transform = Transform3D(2.9802322e-08, 0, -1.0000001, 0, 1, 0, 1.0000001, 0, 2.9802322e-08, 9.8, 3, 0.15000059)
-use_collision = true
-size = Vector3(19.7, 6, 0.5)
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="Building"]
-transform = Transform3D(-1.0000001, 0, 1.39090695e-08, 0, 1, 0, -1.39090695e-08, 0, -1.0000001, 0.049999997, 3, 10.250003)
-use_collision = true
-size = Vector3(20, 6, 0.5)
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="Building"]
-transform = Transform3D(5.762046e-08, 0, 1.0000001, 0, 1, 0, -1.0000001, 0, 5.762046e-08, -10.2, 3, 0.25000247)
-use_collision = true
-size = Vector3(19.7, 6, 0.5)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Building"]
-transform = Transform3D(1.4901161e-08, 0, -1.0000001, 0, 1, 0, 0.50000006, 0, 2.9802322e-08, -0.6999998, 3, 5.1500006)
-use_collision = true
-size = Vector3(19.7, 6, 0.5)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Building/CSGBox3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.89999986, 0)
-operation = 2
-size = Vector3(4.6, 4.2000003, 1)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Building"]
-transform = Transform3D(-0.50000006, 0, 1.39090695e-08, 0, 1, 0, -6.9545347e-09, 0, -1.0000001, -5.225, 3, 0.05000086)
-use_collision = true
-size = Vector3(19, 6, 0.5)
-
-[node name="CSGBox3D" type="CSGBox3D" parent="Building/CSGBox3D4"]
-operation = 2
-size = Vector3(9.8, 2.9, 1)
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Building/CSGBox3D4"]
-transform = Transform3D(4.6500006, -1.3352701e-08, -6.8849886e-08, 1.2935435e-07, -2.8610229e-08, 2.4749997, -1.2935435e-07, -0.47999993, -2.2128218e-07, -4.9999995, 0, 6.3329935e-08)
-operation = 2
-radius = 0.6
-sides = 16
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Building/CSGBox3D4"]
-transform = Transform3D(4.6500006, -1.3352701e-08, -6.8849886e-08, 1.2935435e-07, -2.8610229e-08, 2.4749997, -1.2935435e-07, -0.47999993, -2.2128218e-07, 4.5999994, 0, 0)
-operation = 2
-radius = 0.6
-sides = 16
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4, 3, -6)
-height = 6.0
-sides = 16
-script = ExtResource("2_sugp2")
-
-[node name="hurtbox" type="Area3D" parent="Building/CSGCylinder3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Building/CSGCylinder3D/hurtbox"]
-shape = SubResource("CylinderShape3D_sugp2")
-
-[node name="CSGBox3D7" type="CSGBox3D" parent="Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.65, 1.7977102, 10.238178)
-operation = 2
-size = Vector3(2.9, 3.5, 1)
-
-[node name="CSGBox3D8" type="CSGBox3D" parent="Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6309414, 0, 17.339882)
-size = Vector3(6.7557373, 1, 11.431335)
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="Building"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6309414, 0, 32.33988)
-size = Vector3(6.7557373, 1, 11.431335)
-
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_o5qli")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, -1.4156103e-07, -1.0999995)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+script = ExtResource("2_sugp2")
+
+[node name="f1" type="CSGBox3D" parent="CSGCombiner3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9000006, 0)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("1_0wfyh")
+
+[node name="f2" type="CSGBox3D" parent="CSGCombiner3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -4.9, 0)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = SubResource("StandardMaterial3D_0wfyh")
+
+[node name="f3" type="CSGBox3D" parent="CSGCombiner3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -4.9, 20)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = SubResource("StandardMaterial3D_sugp2")
+
+[node name="f4" type="CSGBox3D" parent="CSGCombiner3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 20)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = SubResource("StandardMaterial3D_jyhfs")
