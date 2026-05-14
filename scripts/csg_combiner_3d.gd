@@ -1,10 +1,12 @@
 extends CSGCombiner3D
 var poss = []
 func  _ready() -> void:
+	#Gets position of the rooms
 	poss = [%f1.position,%f2.position,%f3.position,%f4.position]
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_menu"):
+		#Basic Shuffle Mechanics
 		poss.shuffle()
 		print(poss)
 		%f1.position=poss[0]
