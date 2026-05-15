@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3y508ivagkm3"]
+[gd_scene load_steps=14 format=3 uid="uid://d3y508ivagkm3"]
 
 [ext_resource type="Material" uid="uid://dyj3olp740hx7" path="res://resources/main.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
 
 [sub_resource type="Environment" id="Environment_o5qli"]
 background_mode = 1
@@ -74,6 +75,8 @@ material = ExtResource("1_0wfyh")
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/f1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.1, 0)
 
+[node name="hitbox" parent="CSGCombiner3D/f1" instance=ExtResource("4_jyhfs")]
+
 [node name="f2" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -4.9, 0)
@@ -84,12 +87,16 @@ material = SubResource("StandardMaterial3D_0wfyh")
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D/f2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.094503, 0)
 
+[node name="hitbox" parent="CSGCombiner3D/f2" instance=ExtResource("4_jyhfs")]
+
 [node name="f3" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -4.9, 20)
 use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_sugp2")
+
+[node name="hitbox" parent="CSGCombiner3D/f3" instance=ExtResource("4_jyhfs")]
 
 [node name="f4" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
@@ -101,12 +108,16 @@ material = SubResource("StandardMaterial3D_tbgi4")
 [node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D/f4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.575119, 0)
 
+[node name="hitbox" parent="CSGCombiner3D/f4" instance=ExtResource("4_jyhfs")]
+
 [node name="f5" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 20)
 use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_jyhfs")
+
+[node name="hitbox" parent="CSGCombiner3D/f5" instance=ExtResource("4_jyhfs")]
 
 [node name="f6" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
@@ -115,12 +126,16 @@ use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_tefeu")
 
+[node name="hitbox" parent="CSGCombiner3D/f6" instance=ExtResource("4_jyhfs")]
+
 [node name="f7" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -4.9, -20)
 use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_o6xl0")
+
+[node name="hitbox" parent="CSGCombiner3D/f7" instance=ExtResource("4_jyhfs")]
 
 [node name="f8" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
@@ -129,9 +144,23 @@ use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_tipki")
 
+[node name="hitbox" parent="CSGCombiner3D/f8" instance=ExtResource("4_jyhfs")]
+
 [node name="f9" type="CSGBox3D" parent="CSGCombiner3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -4.9, 20)
 use_collision = true
 size = Vector3(20, 10, 20)
 material = SubResource("StandardMaterial3D_85g3d")
+
+[node name="hitbox" parent="CSGCombiner3D/f9" instance=ExtResource("4_jyhfs")]
+
+[connection signal="body_entered" from="CSGCombiner3D/f1/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f2/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f3/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f4/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f5/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f6/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f7/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f8/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="CSGCombiner3D/f9/hitbox" to="CSGCombiner3D" method="_on_hitbox_body_entered"]

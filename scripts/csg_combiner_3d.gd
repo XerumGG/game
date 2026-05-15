@@ -1,25 +1,28 @@
 extends CSGCombiner3D
+
 var poss = []
+var index = 0
+
 func  _ready() -> void:
 	poss = [%f1.position,%f2.position,%f3.position,%f4.position,%f5.position,%f6.position,%f7.position,%f8.position,%f9.position]
 	#Gets position of the rooms
+
+#Detects when player enter a room
+func _on_hitbox_body_entered(body: Node3D) -> void:
 	
-func _physics_process(delta: float) -> void:
-	
-	var index = 0
-	var min_dist = %Player.global_position.distance_to(poss[0])
-	if Input.is_action_just_pressed("ui_menu"):
-		#Finds the closest room to the Player
-		for i in range(poss.size()):
-			if(%Player.global_position.distance_to(poss[i]) < min_dist):
-				min_dist=%Player.global_position.distance_to(poss[i])
-				#Saves the index of the room
-				index =i
+	if body == %Player:
 		shuffle_fixed(poss,index)
 
-	
 #Function to Shuffle while keeping one value constant
 func shuffle_fixed(array:Array, k: int):
+	var min_dist = %Player.global_position.distance_to(array[0])
+	for i in range(array.size()):
+	
+			if(%Player.global_position.distance_to(array[i]) < min_dist):
+				min_dist=%Player.global_position.distance_to(array[i])
+				#Saves the index of the room
+				k=i
+	
 	var fixed_array = array.slice(k,k+1)
 	array.remove_at(k)
 	array.shuffle()
