@@ -2,6 +2,7 @@
 
 [ext_resource type="Material" uid="uid://dyj3olp740hx7" path="res://resources/main.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
 
@@ -48,7 +49,10 @@ emission = Color(0.47788018, 0.47788012, 0.47788012, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85g3d"]
 albedo_color = Color(1.4944644, 2.3369708, 3.6007304, 1)
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_jyhfs"]
+
 [node name="main" type="Node3D" unique_id=1963971271]
+script = ExtResource("1_tbgi4")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1145708849]
 environment = SubResource("Environment_o5qli")
@@ -207,6 +211,12 @@ size = Vector3(8.400001, 1, 27.6)
 transform = Transform3D(7.4505806e-08, 0, -1.0000001, 0, 1, 0, 1.0000001, 0, 7.4505806e-08, 87.15001, 4.5000005, -1.8000107)
 size = Vector3(8.400001, 1, 59.7)
 
+[node name="Area3D" type="Area3D" parent="." unique_id=474070666]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2105238068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -87.073814, -2.9)
+shape = SubResource("WorldBoundaryShape3D_jyhfs")
+
 [connection signal="body_entered" from="Rooms/f1/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f2/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f3/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
@@ -216,3 +226,4 @@ size = Vector3(8.400001, 1, 59.7)
 [connection signal="body_entered" from="Rooms/f7/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f8/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f9/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
