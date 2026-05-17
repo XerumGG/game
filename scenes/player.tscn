@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnendg2va3g74"]
+[gd_scene format=3 uid="uid://bnendg2va3g74"]
 
 [ext_resource type="PackedScene" uid="uid://dehxqu8dfcyb4" path="res://assests/models/low_poly_flare_gun.glb" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dgwalcvrqs0kg" path="res://scripts/player.gd" id="1_g2els"]
@@ -10,34 +10,35 @@
 [sub_resource type="BoxMesh" id="BoxMesh_u8vuu"]
 size = Vector3(0.1, 0.1, 1)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=574846217]
 script = ExtResource("1_g2els")
+rate = 0.1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752794869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_u8vuu")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1435273476]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.652628, -0.1)
 
-[node name="Sketchfab_Scene" parent="Camera3D" instance=ExtResource("1_3vyb7")]
+[node name="Sketchfab_Scene" parent="Camera3D" unique_id=225398287 instance=ExtResource("1_3vyb7")]
 transform = Transform3D(-0.0034538377, -0.0004181809, -0.059899043, 1.3380626e-11, 0.059998512, -0.00041887557, 0.059900507, -2.4112123e-05, -0.003453754, 0, -0.26, -0.49600002)
 
-[node name="Marker3D" type="Marker3D" parent="Camera3D/Sketchfab_Scene"]
+[node name="Marker3D" type="Marker3D" parent="Camera3D/Sketchfab_Scene" unique_id=654006835]
 unique_name_in_owner = true
 transform = Transform3D(-1.0000001, 0, 8.742277e-08, 0, 0.9999997, 0, -8.7422784e-08, 0, -0.9999999, -5.474532, 1.8357639, -0.044860125)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1367750734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_u8vuu")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2085393927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5995338, -0.8976143)
 visible = false
 mesh = SubResource("BoxMesh_u8vuu")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1046193404]
 unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true

@@ -1,5 +1,7 @@
 extends CharacterBody3D
 @export var rate = 0.4
+signal player_hit
+var health = 30
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED      #Locks the mouse
@@ -68,3 +70,13 @@ func _on_tp_body_entered(body: Node3D) -> void:
 		body.position.z = 101.795
 	elif body.position.z > 0 and body == %Player:
 		body.position.z = -131.505
+
+func hit():
+	health -= randi_range(4, 8)
+	print("health: ", health)
+	emit_signal("player_hit")
+	if health <= 0:
+		die()
+		
+func die():
+	get_tree().reload_current_scene()
