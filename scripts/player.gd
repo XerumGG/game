@@ -1,10 +1,22 @@
 extends CharacterBody3D
-@export var rate = 0.4
-signal player_hit
+
+var bullet = load("res://scenes/bullet.tscn")
+var bullet_instance
 var health = 30
+var score = 0
+var zoomed = false
+var target_fov = 75.0
+
+signal update_score
+signal player_dead
+signal shot
+signal player_hit
+
+@onready var gun_anim = $Camera3D/Rifle/AnimationPlayer
+@onready var gun_cast = $Camera3D/Rifle/RayCast3D
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED      #Locks the mouse
+	score = 0
 
 func _unhandled_input(event):
 	#Camera movement using mouse
@@ -16,14 +28,26 @@ func _unhandled_input(event):
 		)
 	elif event.is_action_pressed("esc"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE      #Unlocks the mouse
+	if event.is_action_pressed("zoom"):
+		zoomed = !zoomed
+		target_fov = 30.0 if zoomed else 75.0
+		if zoomed:
+			gun_anim.play("zoom")
+		else:
+			gun_anim.play_backwards("zoom")
 
 func _physics_process(delta):
 	#Sprint set-up
 	var speed = 5.5
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and is_on_floor():
 		speed = 10
-	else: speed = 5.5
-	
+	elif Input.is_action_pressed("sprint"):
+		speed = 7
+	elif is_on_floor(): 
+		speed = 5.5
+	else:
+		speed = 2
+		
 	#Movement of player
 	var input_direction_2d = Input.get_vector(
 		"left","right","up","down"
@@ -37,27 +61,27 @@ func _physics_process(delta):
 	
 	#Gravity and jumping
 	velocity.y -=35*delta
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = 10
 	elif Input.is_action_just_released("jump") and velocity.y >0:
 		velocity.y = 0
+	
+	
+	#Shooting
+	%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
+	
+	if Input.is_action_pressed("shoot"):
+		if !gun_anim.is_playing():
+			gun_anim.play("shoot_zoomed" if zoomed else "shoot")
+			if %Rifle.capacity:
+				bullet_instance = bullet.instantiate()
+				emit_signal("shot")
+				bullet_instance.position = gun_cast.global_position
+				bullet_instance.transform.basis = gun_cast.global_transform.basis
+				get_parent().add_child(bullet_instance)
+	
 	move_and_slide()
 	
-	#Trigger for shooting
-	if Input.is_action_pressed("shoot") and %Timer.is_stopped():
-		shoot_bullet()
-
-
-
-func shoot_bullet():
-	const BULLET = preload("res://scenes/bullet.tscn") 
-	var new_bullet = 	BULLET.instantiate()
-	%Marker3D.add_child(new_bullet)
-	
-	new_bullet.global_transform = %Marker3D.global_transform
-	%Timer.wait_time = rate
-	%Timer.start()
-
 func _on_tp_1_body_entered(body: Node3D) -> void:
 	if body.position.z < 0 and body == %Player:
 		body.position.z = 101.795
@@ -77,6 +101,11 @@ func hit():
 	emit_signal("player_hit")
 	if health <= 0:
 		die()
-		
+
+func points(point):
+	score+=point
+	emit_signal("update_score")
+	print(score)
+
 func die():
-	get_tree().reload_current_scene()
+	emit_signal("player_dead")

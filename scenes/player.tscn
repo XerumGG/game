@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnendg2va3g74"]
 
-[ext_resource type="PackedScene" uid="uid://dehxqu8dfcyb4" path="res://assests/models/low_poly_flare_gun.glb" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dgwalcvrqs0kg" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://cjut3wpjao76r" path="res://scenes/rifle.tscn" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
@@ -12,7 +12,6 @@ size = Vector3(0.1, 0.1, 1)
 
 [node name="Player" type="CharacterBody3D" unique_id=574846217]
 script = ExtResource("1_g2els")
-rate = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752794869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -22,12 +21,9 @@ shape = SubResource("CapsuleShape3D_u8vuu")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.652628, -0.1)
 
-[node name="Sketchfab_Scene" parent="Camera3D" unique_id=225398287 instance=ExtResource("1_3vyb7")]
-transform = Transform3D(-0.0034538377, -0.0004181809, -0.059899043, 1.3380626e-11, 0.059998512, -0.00041887557, 0.059900507, -2.4112123e-05, -0.003453754, 0, -0.26, -0.49600002)
-
-[node name="Marker3D" type="Marker3D" parent="Camera3D/Sketchfab_Scene" unique_id=654006835]
+[node name="Rifle" parent="Camera3D" unique_id=233691901 instance=ExtResource("2_g2els")]
 unique_name_in_owner = true
-transform = Transform3D(-1.0000001, 0, 8.742277e-08, 0, 0.9999997, 0, -8.7422784e-08, 0, -0.9999999, -5.474532, 1.8357639, -0.044860125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24000001, -0.2299999, -0.5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1367750734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -42,3 +38,5 @@ mesh = SubResource("BoxMesh_u8vuu")
 unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
+
+[connection signal="shot" from="." to="Camera3D/Rifle" method="_on_player_shot"]
