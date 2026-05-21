@@ -6,6 +6,7 @@ var health = 30
 var score = 0
 var zoomed = false
 var target_fov = 75.0
+var weapon = ""
 
 signal update_score
 signal player_dead
@@ -14,8 +15,10 @@ signal player_hit
 
 @onready var gun_anim = $Camera3D/Rifle/AnimationPlayer
 @onready var gun_cast = $Camera3D/Rifle/RayCast3D
+@onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
 func _ready():
+	weapon = "axe"
 	score = 0
 
 func _unhandled_input(event):
@@ -26,15 +29,22 @@ func _unhandled_input(event):
 		%Camera3D.rotation_degrees.x = clamp(
 			%Camera3D.rotation_degrees.x , -60.0, 80.0
 		)
-	elif event.is_action_pressed("esc"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE      #Unlocks the mouse
-	if event.is_action_pressed("zoom"):
-		zoomed = !zoomed
-		target_fov = 30.0 if zoomed else 75.0
-		if zoomed:
-			gun_anim.play("zoom")
-		else:
-			gun_anim.play_backwards("zoom")
+	if Input.is_action_just_pressed("1"):
+		weapon = "gun"
+	elif Input.is_action_just_pressed("2"):
+		weapon = "axe"
+
+	match weapon:
+		"gun":
+			if event.is_action_pressed("zoom") and !gun_anim.is_playing():
+				zoomed = !zoomed
+				target_fov = 30.0 if zoomed else 75.0
+				if zoomed:
+					gun_anim.play("zoom")
+				else:
+					gun_anim.play_backwards("zoom")
+		"axe":
+			pass
 
 func _physics_process(delta):
 	#Sprint set-up
@@ -66,19 +76,29 @@ func _physics_process(delta):
 	elif Input.is_action_just_released("jump") and velocity.y >0:
 		velocity.y = 0
 	
-	
-	#Shooting
-	%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
-	
-	if Input.is_action_pressed("shoot"):
-		if !gun_anim.is_playing():
-			gun_anim.play("shoot_zoomed" if zoomed else "shoot")
-			if %Rifle.capacity:
-				bullet_instance = bullet.instantiate()
-				emit_signal("shot")
-				bullet_instance.position = gun_cast.global_position
-				bullet_instance.transform.basis = gun_cast.global_transform.basis
-				get_parent().add_child(bullet_instance)
+	match weapon:
+		"gun":
+			%Rifle.visible = true
+			$Camera3D/Axe.visible = false
+			#Shooting
+			%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
+			
+			if Input.is_action_pressed("shoot"):
+				if !gun_anim.is_playing():
+					gun_anim.play("shoot_zoomed" if zoomed else "shoot")
+					if %Rifle.capacity:
+						bullet_instance = bullet.instantiate()
+						emit_signal("shot")
+						bullet_instance.position = gun_cast.global_position
+						bullet_instance.transform.basis = gun_cast.global_transform.basis
+						get_parent().add_child(bullet_instance)
+		"axe":
+			%Rifle.visible = false
+			$Camera3D/Axe.visible = true
+			if Input.is_action_just_pressed("shoot"):
+				if !axe_anim.is_playing():
+					axe_anim.play("swing")
+			pass
 	
 	move_and_slide()
 	
@@ -97,7 +117,6 @@ func _on_tp_body_entered(body: Node3D) -> void:
 
 func hit():
 	health -= randi_range(4, 8)
-	print("health: ", health)
 	emit_signal("player_hit")
 	if health <= 0:
 		die()
@@ -105,7 +124,6 @@ func hit():
 func points(point):
 	score+=point
 	emit_signal("update_score")
-	print(score)
 
 func die():
 	emit_signal("player_dead")

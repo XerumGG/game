@@ -19,5 +19,4 @@ func _process(delta: float) -> void:
 		queue_free()
 
 func _on_life_timeout() -> void:
-	print("over")
 	queue_free()

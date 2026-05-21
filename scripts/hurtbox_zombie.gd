@@ -2,7 +2,8 @@ extends Area3D
 
 @export var damage = 5.0
 
-signal body_part_hit(dam)
+signal body_part_hit(dam, weapon)
 
-func hit():
-	emit_signal("body_part_hit", damage)
+func hit(dam = damage, weapon: String = "gun"):
+	emit_signal("body_part_hit", dam, weapon)
+	print("HIT")

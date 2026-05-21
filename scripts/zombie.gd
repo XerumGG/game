@@ -1,10 +1,12 @@
 extends CharacterBody3D
-
 var player = null
 var state_machine
 var health = 15
 var speed = 2
+var knockback = Vector3.ZERO
 const ATTACK_RANGE = 2.2
+const KNOCKBACK_FORCE = 15.0
+const KNOCKBACK_DECAY = 10.0
 signal zombie_dead
 @export var player_path : NodePath
 @onready var nav_agent = $NavigationAgent3D
@@ -30,11 +32,15 @@ func _process(delta: float) -> void:
 		"attack":
 			smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
 	
+	# apply knockback
+	velocity += knockback
+	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)
+	
 	anim["parameters/conditions/attack"] = in_range()
 	anim["parameters/conditions/run"] = !in_range()
 	
 	move_and_slide()
-	
+
 func smooth_look_at(target: Vector3, delta: float) -> void:
 	var direction = (target - global_position)
 	if direction.length() < 0.1:
@@ -49,11 +55,12 @@ func hit_finished():
 	if in_range():
 		player.hit()
 
-
-func _on_area_3d_body_part_hit(dam: Variant) -> void:
+func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
 	health -= dam
-	print(health)
-	if health <=0:
+	# knockback away from player
+	var direction = (global_position - player.global_position).normalized()
+	knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
+	if health <= 0:
 		emit_signal("zombie_dead")
 		player.points(2)
 		queue_free()
