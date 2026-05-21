@@ -57,20 +57,20 @@ func _process(delta: float) -> void:
 			update_health()
 			
 			if level == 1:
-				$SpawnMarkers.position = Vector3(0,0,6)
+				$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,0,6)
 				spawn_cap = 20
 				dif = 10
-				if %Player.score > 10:
+				if %Player.score > 30:
 					wait = true
-					level = 2
 					%Player.health = 30
 					%Player.score = 0
 					%Player.position = Vector3(2,40,-1)
+					level = 2
 			elif level == 2:
-				$SpawnMarkers.position = Vector3(0,37,6)
+				$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,37,6)
 				spawn_cap = 35
 				dif = 20
-				if %Player.score > 10:
+				if %Player.score > 50:
 					state = "win"
 		"dead":
 			hp_bar.visible = false
@@ -105,7 +105,7 @@ func spawn_zombie() -> void:
 		while wait:
 			await get_tree().process_frame
 		
-		var markers = $SpawnMarkers.get_children()
+		var markers = $NavigationRegion3D/Rooms/SpawnMarkers.get_children()
 		var valid_markers = markers.filter(func(m): 
 			return m.global_position.distance_to(%Player.global_position) < SPAWN_RANGE
 		)
