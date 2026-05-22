@@ -7,6 +7,9 @@ var score = 0
 var zoomed = false
 var target_fov = 75.0
 var weapon = ""
+var bob_time = 0.0
+var cam_base_pos
+var bob_enabled = true
 
 signal update_score
 signal player_dead
@@ -20,6 +23,8 @@ signal player_hit
 func _ready():
 	weapon = "axe"
 	score = 0
+	cam_base_pos = %Camera3D.position
+	print(cam_base_pos)
 
 func _unhandled_input(event):
 	#Camera movement using mouse
@@ -75,6 +80,18 @@ func _physics_process(delta):
 		velocity.y = 10
 	elif Input.is_action_just_released("jump") and velocity.y >0:
 		velocity.y = 0
+	
+	var horizontal_velocity = Vector2(velocity.x, velocity.z).length()
+	if is_on_floor() and horizontal_velocity > 0.1 and bob_enabled:
+		var bob_speed = 10.0 if horizontal_velocity < 8.0 else 16.0
+		var bob_amount = 0.075 if horizontal_velocity < 8.0 else 0.15
+		bob_time += delta * bob_speed
+		%Camera3D.position.y = cam_base_pos.y + sin(bob_time) * bob_amount
+		%Camera3D.position.x = cam_base_pos.x + sin(bob_time * 0.5) * bob_amount
+	else:
+		bob_time = 0.0
+		%Camera3D.position.y = lerp(%Camera3D.position.y, cam_base_pos.y, delta * 10.0)
+		%Camera3D.position.x = lerp(%Camera3D.position.x, cam_base_pos.x, delta * 10.0)
 	
 	match weapon:
 		"gun":

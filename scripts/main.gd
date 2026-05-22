@@ -25,7 +25,7 @@ func _ready() -> void:
 	level = 1
 	wait = false
 	%Player.position = Vector3(2,0,-1)
-	state = "play"
+	state = "start"
 	hp.text = "HP: " + str(%Player.health)
 	bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
 	hp_bar.max_value = 30
@@ -33,12 +33,25 @@ func _ready() -> void:
 	hp_ghost.max_value = 30
 	hp_ghost.value = 30
 	score_bar.text = "SCORE: " + str(%Player.score)
-	spawn_zombie()
 
 func _process(delta: float) -> void:
 	delta_cache = delta
 	match state:
+		"start":
+			hp_bar.visible = false
+			bullets.visible = false
+			$UI/CheckBox.visible = true
+			hp_ghost.visible = false
+			hp.visible = false
+			score_bar.visible = false
+			restart.visible = false
+			resume.visible = false
+			$UI/black.visible = true
+			$UI/PixilFrame0.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_tree().paused = true
 		"play":
+			$UI/CheckBox.visible = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
 			hp_bar.visible = true
 			hp_ghost.visible = true
@@ -48,6 +61,7 @@ func _process(delta: float) -> void:
 			restart.visible = false
 			resume.visible = false
 			$UI/black.visible = false
+			$UI/Start.visible = false
 			$UI/PixilFrame0.visible = true
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."

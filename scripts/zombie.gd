@@ -5,7 +5,7 @@ var health = 15
 var speed = 2
 var knockback = Vector3.ZERO
 const ATTACK_RANGE = 2.2
-const KNOCKBACK_FORCE = 15.0
+const KNOCKBACK_FORCE = 20.0
 const KNOCKBACK_DECAY = 10.0
 signal zombie_dead
 @export var player_path : NodePath

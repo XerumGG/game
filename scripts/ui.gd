@@ -2,11 +2,10 @@ extends Control
 @onready var main = $".."
 var counting_down = false
 
-func _on_restart_pressed() -> void:
-	main.state = "play"
-	main.get_tree().paused = false
-	get_tree().reload_current_scene()
-	
+func _ready() -> void:
+	$CheckBox.button_pressed = true
+	%Player.bob_enabled = $CheckBox.button_pressed
+
 func  _process(delta: float) -> void:
 	if main.wait and !counting_down:
 		counting_down = true
@@ -27,11 +26,16 @@ func  _process(delta: float) -> void:
 			$Bullets.visible = false
 			$HP2_ghost.visible = false
 			$PixilFrame0.visible = false
+			$CheckBox.visible = true
 		elif main.state == "paused":
 			get_tree().paused = false
 			main.state = "play"
 			main.spawn_zombie()
 
+func _on_restart_pressed() -> void:
+	main.state = "start"
+	main.get_tree().paused = false
+	get_tree().reload_current_scene()
 
 func _on_resume_pressed() -> void:
 	get_tree().paused = false
@@ -46,3 +50,16 @@ func countdown() -> void:
 	await get_tree().create_timer(1.0).timeout
 	$Label.visible = false
 	counting_down = false
+
+
+func _on_start_pressed() -> void:
+	main.state = "play"
+	main.get_tree().paused = false
+	main.spawn_zombie()
+
+
+func _on_check_box_toggled(toggled_on: bool) -> void:
+	print("toggled: ", toggled_on)
+	print("player: ",%Player)
+	%Player.bob_enabled = toggled_on
+	print(%Player.bob_enabled)
