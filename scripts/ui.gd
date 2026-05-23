@@ -56,6 +56,7 @@ func _on_start_pressed() -> void:
 	main.state = "play"
 	main.get_tree().paused = false
 	main.spawn_zombie()
+	#main.spawn_pickup()
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:

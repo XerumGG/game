@@ -112,6 +112,7 @@ func _physics_process(delta):
 		"axe":
 			%Rifle.visible = false
 			$Camera3D/Axe.visible = true
+			%Camera3D.fov = lerp(%Camera3D.fov, 75.0, 10.0 * delta)
 			if Input.is_action_just_pressed("shoot"):
 				if !axe_anim.is_playing():
 					axe_anim.play("swing")

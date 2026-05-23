@@ -9,6 +9,7 @@ extends Node3D
 @onready var resume = $UI/Resume
 
 var wait 
+var zombie_pos
 var dif = 10
 var level
 var delta_cache = 0.0
@@ -17,6 +18,7 @@ var spawning = false
 @export var spawn_cap = 10
 var spawned = 0
 
+const PICKUP = preload("res://scenes/pickup.tscn")
 const ZOMBIE = preload("res://scenes/Zombie.tscn")
 const SPAWN_RANGE = 20.0
 var target_hp = 30
@@ -128,6 +130,7 @@ func spawn_zombie() -> void:
 			var random_marker = valid_markers[randi() % valid_markers.size()]
 			var zombie = ZOMBIE.instantiate()
 			zombie.zombie_dead.connect(reduce)
+			zombie.zombie_dead.connect(drop)
 			add_child(zombie)
 			spawned += 1
 			var random_angle = randf() * TAU
@@ -159,11 +162,20 @@ func _on_player_update_score() -> void:
 func _on_player_player_dead() -> void:
 	state = "dead"
 
-func reduce():
+func reduce(pos):
+	%Player.points(2)
 	if spawned > 0:
 		spawned -= 1
 
+func drop(pos):
+	if randi() % 5 == 0:
+		var pickup = PICKUP.instantiate()
+		pickup.type = "heal" if $Player/Camera3D/Rifle.max_capacity > 20 else "mag"
+		add_child(pickup)
+		pickup.global_position = pos
+
 func update_health():
+	hp.text = "HP: " + str(%Player.health)
 	hp_bar.value = lerp(hp_bar.value, float(target_hp), 8.0 * delta_cache)
 	if abs(hp_bar.value - float(target_hp)) < 0.5:
 		hp_bar.value = target_hp
