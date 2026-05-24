@@ -2,6 +2,163 @@
 
 [ext_resource type="Script" uid="uid://ducfwse37d1um" path="res://scripts/axe.gd" id="1_odgf8"]
 
+[sub_resource type="Animation" id="Animation_odgf8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Axe_Model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(5.32415e-05, -2.8611219e-05, 0.009605813)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.013000001, 0.020000009, 0.025000002)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Anchor:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.5235988, 0.17453295, -5.047357e-08)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D2:shape:size")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.8000001, 0.2, 0.31)]
+}
+
+[sub_resource type="Animation" id="Animation_8d8fu"]
+resource_name = "swing"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(5.32415e-05, -2.8611219e-05, 0.009605813), Vector3(0.00014356058, -2.861155e-05, 0.01711009), Vector3(0.00014356058, -2.861155e-05, 0.01711009), Vector3(0.00017701788, -2.8611266e-05, 0.009717313)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.013, 0.02, 0.018), Vector3(0.013, 0.02, 0.038), Vector3(0.013, 0.02, 0.038), Vector3(0.013, 0.02, 0.018)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.5235988, 0.17453295, -5.047357e-08), Vector3(-1.3456489, 2.3911011, -0.6370452), Vector3(-1.3456489, 3.8920841, -0.6370452), Vector3(-0.5235988, 0.17453295, -5.047357e-08)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D2:shape:size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.94, 0.2, 0.31), Vector3(1.8000001, 0.2, 0.31), Vector3(1.8000001, 0.2, 0.31), Vector3(0.94, 0.2, 0.31)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Anchor/Axe_Model/Area3D/CollisionShape3D2:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_odgf8"]
+_data = {
+&"RESET": SubResource("Animation_odgf8"),
+&"swing": SubResource("Animation_8d8fu")
+}
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fs0kw"]
 resource_name = "DarkWood"
 albedo_color = Color(0.25020754, 0.17530368, 0.22458096, 1)
@@ -151,147 +308,37 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4e665")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8d8fu"]
-size = Vector3(0.87, 0.2, 0.64)
+size = Vector3(0.90000004, 0.2, 0.64)
 
-[sub_resource type="Animation" id="Animation_odgf8"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Axe_Model:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Axe_Model:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-1.5707964, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Axe_Model/Area3D/CollisionShape3D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Axe_Model/Area3D/CollisionShape3D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(5.32415e-05, -2.8611219e-05, 0.009605813)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Axe_Model/Area3D/CollisionShape3D:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.013000001, 0.020000009, 0.025000002)]
-}
-
-[sub_resource type="Animation" id="Animation_8d8fu"]
-resource_name = "swing"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Axe_Model:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(-1.5707964, 0, 0), Vector3(-0.34906593, -1.5707964, 1.5707964), Vector3(0.8726645, -1.5707964, 1.5707963), Vector3(-1.3962636, -1.5707965, 1.5707965)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Axe_Model/Area3D/CollisionShape3D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Axe_Model/Area3D/CollisionShape3D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(5.32415e-05, -2.8611219e-05, 0.009605813), Vector3(0.00014356058, -2.861155e-05, 0.01711009), Vector3(0.00014356058, -2.861155e-05, 0.01711009), Vector3(0.00017701788, -2.8611266e-05, 0.009717313)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Axe_Model/Area3D/CollisionShape3D:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0.013, 0.02, 0.018), Vector3(0.013, 0.02, 0.038), Vector3(0.013, 0.02, 0.038), Vector3(0.013, 0.02, 0.018)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_odgf8"]
-_data = {
-&"RESET": SubResource("Animation_odgf8"),
-&"swing": SubResource("Animation_8d8fu")
-}
+[sub_resource type="BoxShape3D" id="BoxShape3D_odgf8"]
+size = Vector3(1.8000001, 0.2, 0.31)
 
 [node name="Axe" type="Node3D" unique_id=380845150]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_odgf8")
-
-[node name="Axe_Model" type="MeshInstance3D" parent="." unique_id=562700247]
-transform = Transform3D(49.99997, 0, 0, 0, -2.1855685e-06, 49.999985, 0, -49.999977, -2.1855687e-06, 0, 0, 0)
-mesh = SubResource("ArrayMesh_fslkv")
-skeleton = NodePath("")
-
-[node name="Area3D" type="Area3D" parent="Axe_Model" unique_id=1673921478]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Axe_Model/Area3D" unique_id=1056488035]
-transform = Transform3D(0.013000001, 2.5790656e-10, 6.2685146e-09, -1.676392e-10, 0.020000009, -1.0459139e-10, -3.2596275e-09, 8.367308e-11, 0.025000002, 5.32415e-05, -2.8611219e-05, 0.009605813)
-shape = SubResource("BoxShape3D_8d8fu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1895059678]
 libraries/ = SubResource("AnimationLibrary_odgf8")
 
-[connection signal="area_entered" from="Axe_Model/Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="body_entered" from="Axe_Model/Area3D" to="." method="_on_area_3d_body_entered"]
+[node name="Anchor" type="Node3D" parent="." unique_id=1290658150]
+transform = Transform3D(0.98480743, -0.086824045, 0.15038376, -4.3711378e-08, 0.8660253, 0.5, -0.17364813, -0.49240384, 0.8528685, -2.6226834e-08, 0, 0.3)
+
+[node name="Axe_Model" type="MeshInstance3D" parent="Anchor" unique_id=562700247]
+transform = Transform3D(49.999977, -4.7683716e-07, -9.536743e-07, -4.7683716e-07, 0, 49.999992, -9.536743e-07, -49.999985, 0, 0, 0, 0)
+mesh = SubResource("ArrayMesh_fslkv")
+skeleton = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="Anchor/Axe_Model" unique_id=1673921478]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Anchor/Axe_Model/Area3D" unique_id=1056488035]
+transform = Transform3D(0.013000001, -6.590785e-08, 8.9545116e-10, 4.2840085e-08, 0.020000009, 1.0841055e-08, -4.6565318e-10, -8.672845e-09, 0.025000002, 5.32415e-05, -2.8611219e-05, 0.009605813)
+shape = SubResource("BoxShape3D_8d8fu")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Anchor/Axe_Model/Area3D" unique_id=384656456]
+transform = Transform3D(0.01300094, -1.6647391e-07, -2.7939677e-09, 1.4179386e-07, 0.020001015, 5.1571988e-08, 2.3283064e-09, -4.400499e-08, 0.03796304, 0.00033826684, -2.8636772e-05, 0.011591583)
+shape = SubResource("BoxShape3D_odgf8")
+
+[connection signal="area_entered" from="Anchor/Axe_Model/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Anchor/Axe_Model/Area3D" to="." method="_on_area_3d_body_entered"]

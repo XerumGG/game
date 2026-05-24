@@ -2,6 +2,8 @@ extends Node3D
 @export var type = "base"
 
 func _ready() -> void:
+	print("heal node: ", $Heal)
+	print("base node: ", $Base)
 	match type:
 		"heal":
 			$Heal.visible = true
@@ -29,5 +31,4 @@ func _on_detection_body_entered(body: Node3D) -> void:
 		await get_tree().create_timer(0.2).timeout
 		color_rect.visible = false
 		color_rect.color = Color(0xff00008e)
-		#main.pickup_collected()
 		queue_free()

@@ -168,11 +168,11 @@ func reduce(pos):
 		spawned -= 1
 
 func drop(pos):
-	if randi() % 5 == 0:
+	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
 		pickup.type = "heal" if $Player/Camera3D/Rifle.max_capacity > 20 else "mag"
 		add_child(pickup)
-		pickup.global_position = pos
+		pickup.global_position = pos + Vector3(0, 2, 0)
 
 func update_health():
 	hp.text = "HP: " + str(%Player.health)
