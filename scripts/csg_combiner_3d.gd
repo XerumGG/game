@@ -17,7 +17,6 @@ func _on_hitbox_body_entered(body: Node3D) -> void:
 func shuffle_fixed(array:Array, k: int):
 	var min_dist = %Player.global_position.distance_to(array[0])
 	for i in range(array.size()):
-	
 			if(%Player.global_position.distance_to(array[i]) < min_dist):
 				min_dist=%Player.global_position.distance_to(array[i])
 				#Saves the index of the room

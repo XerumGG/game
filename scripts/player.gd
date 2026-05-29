@@ -10,6 +10,7 @@ var weapon = ""
 var bob_time = 0.0
 var cam_base_pos
 var bob_enabled = true
+var previous 
 
 signal update_score
 signal player_dead
@@ -21,10 +22,10 @@ signal player_hit
 @onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
 func _ready():
+	previous = 0.0
 	weapon = "axe"
 	score = 0
 	cam_base_pos = %Camera3D.position
-	print(cam_base_pos)
 
 func _unhandled_input(event):
 	#Camera movement using mouse
@@ -55,14 +56,18 @@ func _physics_process(delta):
 	#Sprint set-up
 	var speed = 5.5
 	if Input.is_action_pressed("sprint") and is_on_floor():
-		speed = 10
+		speed = lerp(previous, 10.0, 8*delta)
+		previous = 10.0
 	elif Input.is_action_pressed("sprint"):
-		speed = 7
+		speed = lerp(previous, 7.0, 8*delta)
+		previous = 7.0
 	elif is_on_floor(): 
-		speed = 5.5
+		speed = lerp(previous, 5.5, 8*delta)
+		previous = 5.5
 	else:
-		speed = 2
-		
+		speed = lerp(previous, 2.0, 8*delta)
+		previous = 2.0
+	
 	#Movement of player
 	var input_direction_2d = Input.get_vector(
 		"left","right","up","down"
@@ -97,9 +102,9 @@ func _physics_process(delta):
 		"gun":
 			%Rifle.visible = true
 			$Camera3D/Axe.visible = false
+			#$Camera3D/Axe/Area3D.monitoring = false
 			#Shooting
 			%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
-			
 			if Input.is_action_pressed("shoot"):
 				if !gun_anim.is_playing():
 					gun_anim.play("shoot_zoomed" if zoomed else "shoot")
@@ -120,13 +125,6 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-func _on_tp_1_body_entered(body: Node3D) -> void:
-	if body.position.z < 0 and body == %Player:
-		body.position.z = 101.795
-	elif body.position.z > 0 and body == %Player:
-		body.position.z = -131.505
-
-
 func _on_tp_body_entered(body: Node3D) -> void:
 	if body.position.z < 0 and body == %Player:
 		body.position.z = 101.795

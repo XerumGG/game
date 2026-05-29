@@ -321,7 +321,7 @@ script = ExtResource("1_odgf8")
 libraries/ = SubResource("AnimationLibrary_odgf8")
 
 [node name="Anchor" type="Node3D" parent="." unique_id=1290658150]
-transform = Transform3D(0.98480743, -0.086824045, 0.15038376, -4.3711378e-08, 0.8660253, 0.5, -0.17364813, -0.49240384, 0.8528685, -2.6226834e-08, 0, 0.3)
+transform = Transform3D(0.9848074, -0.086824045, 0.15038376, -4.3711378e-08, 0.8660253, 0.5, -0.17364812, -0.49240384, 0.8528685, -2.6226834e-08, 0, 0.3)
 
 [node name="Axe_Model" type="MeshInstance3D" parent="Anchor" unique_id=562700247]
 transform = Transform3D(49.999977, -4.7683716e-07, -9.536743e-07, -4.7683716e-07, 0, 49.999992, -9.536743e-07, -49.999985, 0, 0, 0, 0)
@@ -333,7 +333,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Anchor/Axe_Model/Area3D" unique_id=1056488035]
-transform = Transform3D(0.013000001, -6.590785e-08, 8.9545116e-10, 4.2840085e-08, 0.020000009, 1.0841055e-08, -4.6565318e-10, -8.672845e-09, 0.025000002, 5.32415e-05, -2.8611219e-05, 0.009605813)
+transform = Transform3D(0.013000001, -6.590785e-08, 8.954511e-10, 4.2840085e-08, 0.020000009, 1.0841054e-08, -4.6565313e-10, -8.672844e-09, 0.025000002, 5.32415e-05, -2.8611219e-05, 0.009605813)
 shape = SubResource("BoxShape3D_8d8fu")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Anchor/Axe_Model/Area3D" unique_id=384656456]

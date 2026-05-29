@@ -2,8 +2,6 @@ extends Node3D
 @export var type = "base"
 
 func _ready() -> void:
-	print("heal node: ", $Heal)
-	print("base node: ", $Base)
 	match type:
 		"heal":
 			$Heal.visible = true

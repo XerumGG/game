@@ -8,10 +8,15 @@ extends Node3D
 @onready var bullets = $UI/Bullets
 @onready var resume = $UI/Resume
 
+signal wave_over
+
+var wave
+var wave_triggered = false
 var wait 
 var zombie_pos
 var dif = 10
 var level
+var level_loading = false
 var delta_cache = 0.0
 var state
 var spawning = false
@@ -25,6 +30,7 @@ var target_hp = 30
 
 func _ready() -> void:
 	level = 1
+	wave =1
 	wait = false
 	%Player.position = Vector3(2,0,-1)
 	state = "start"
@@ -37,80 +43,11 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	if state == "level_transition" and !level_loading:
+		level_loading = true
+		level_transition()
 	delta_cache = delta
-	match state:
-		"start":
-			hp_bar.visible = false
-			bullets.visible = false
-			$UI/CheckBox.visible = true
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.visible = false
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = true
-			$UI/PixilFrame0.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"play":
-			$UI/CheckBox.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
-			hp_bar.visible = true
-			hp_ghost.visible = true
-			hp.visible = true
-			score_bar.visible = true
-			bullets.visible = true
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = false
-			$UI/Start.visible = false
-			$UI/PixilFrame0.visible = true
-			if $Player/Camera3D/Rifle.reloading:
-				bullets.text = "Reloading...."
-			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
-			score_bar.position = Vector2(0,0)
-			update_health()
-			
-			if level == 1:
-				$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,0,6)
-				spawn_cap = 20
-				dif = 10
-				if %Player.score > 30:
-					wait = true
-					%Player.health = 30
-					%Player.score = 0
-					%Player.position = Vector3(2,40,-1)
-					level = 2
-			elif level == 2:
-				$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,37,6)
-				spawn_cap = 35
-				dif = 20
-				if %Player.score > 50:
-					state = "win"
-		"dead":
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			restart.visible = true
-			$UI/black.visible = true
-			$UI/PixilFrame0.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"win":
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			$UI/PixilFrame0.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			score_bar.text = "YOU WIN"
-			restart.visible = true
-			$UI/black.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
+	state_machine()
 
 func spawn_zombie() -> void:
 	if spawning:
@@ -180,3 +117,159 @@ func update_health():
 	if abs(hp_bar.value - float(target_hp)) < 0.5:
 		hp_bar.value = target_hp
 		hp_ghost.value = target_hp
+
+
+func _on_hitbox_body_exited(body: Node3D) -> void:
+	if body.is_in_group("enemy") and !body.persistance:
+		if randi()%5 == 0:
+			body.queue_free()
+			spawned -=1
+		else:
+			body.persistance = true
+
+func wave_handle():
+	if %Player.score >= (10*level) and !wave_triggered:
+		wave_triggered = true
+		state = "intermidiate"
+		pause_spawn()
+		clear_zombies()
+		$UI/Label.visible = true
+		$UI/Label.text = "Wave " + str(wave) + " Over"
+		emit_signal("wave_over")
+
+func level_handle():
+	if level == 1:
+		$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,0,6)
+		spawn_cap = 20
+		dif = 10
+		if wave > 3 and !wave_triggered:
+			wave_triggered = true
+			state = "level_transition"
+			pause_spawn()
+			clear_zombies()
+			$UI/Label.visible = true
+			$UI/Label.text = "Level 1 Complete"
+	elif level == 2:
+		$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,37,6)
+		spawn_cap = 35
+		dif = 20
+
+func state_machine():
+	match state:
+		"start":
+			hp_bar.visible = false
+			bullets.visible = false
+			$UI/CheckBox.visible = true
+			hp_ghost.visible = false
+			hp.visible = false
+			score_bar.visible = false
+			restart.visible = false
+			resume.visible = false
+			$UI/black.visible = true
+			$UI/PixilFrame0.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_tree().paused = true
+		"play":
+			$UI/CheckBox.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
+			hp_bar.visible = true
+			hp_ghost.visible = true
+			hp.visible = true
+			score_bar.visible = true
+			bullets.visible = true
+			restart.visible = false
+			resume.visible = false
+			$UI/black.visible = false
+			$UI/Start.visible = false
+			$UI/PixilFrame0.visible = true
+			if $Player/Camera3D/Rifle.reloading:
+				bullets.text = "Reloading...."
+			else:
+				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+			score_bar.position = Vector2(0,0)
+			update_health()
+			level_handle()
+			wave_handle()
+		"dead":
+			hp_bar.visible = false
+			bullets.visible = false
+			hp_ghost.visible = false
+			hp.visible = false
+			score_bar.position = Vector2(820.0,283.333)
+			restart.visible = true
+			$UI/black.visible = true
+			$UI/PixilFrame0.visible = false
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_tree().paused = true
+		"win":
+			hp_bar.visible = false
+			bullets.visible = false
+			hp_ghost.visible = false
+			hp.visible = false
+			$UI/PixilFrame0.visible = false
+			score_bar.position = Vector2(820.0,283.333)
+			score_bar.text = "YOU WIN"
+			restart.visible = true
+			$UI/black.visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			get_tree().paused = true
+
+
+func _on_wave_over() -> void:
+	await get_tree().create_timer(1).timeout
+	$UI/Label.visible = false
+	while !Input.is_action_just_pressed("ui_accept"):
+		await get_tree().process_frame
+	if level == 1 and wave >= 3:
+		$UI.start_countdown()
+		await get_tree().create_timer(4.0).timeout
+		level = 2
+		wave = 1
+		%Player.health = 30
+		%Player.score = 0
+		spawned = 0
+		clear_zombies()
+		%Player.position = Vector3(2,40,-1)
+		wave_triggered = false
+		state = "play"
+		resume_spawn()
+		spawn_zombie()
+		return
+
+	if level == 2 and wave >= 3:
+		state = "win"
+		return
+	wave += 1
+	$UI.start_countdown()
+	await get_tree().create_timer(4.0).timeout
+	wave_triggered = false
+	%Player.score = 0
+	state = "play"
+	resume_spawn()
+	spawn_zombie()
+		
+func level_transition():
+	$UI.start_countdown()
+	await get_tree().create_timer(4.0).timeout
+	level = 2
+	wave = 1
+	%Player.health = 30
+	%Player.score = 0
+	spawned = 0
+	%Player.position = Vector3(2,40,-1)
+	wave_triggered = false
+	state = "play"
+	resume_spawn()
+	spawn_zombie()
+	level_loading = false
+
+func clear_zombies():
+	for zombie in get_tree().get_nodes_in_group("enemy"):
+		zombie.queue_free()
+	spawned = 0
+	
+func pause_spawn():
+	wait = true
+	
+func resume_spawn():
+	wait = false
