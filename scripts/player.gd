@@ -2,7 +2,8 @@ extends CharacterBody3D
 
 var bullet = load("res://scenes/bullet.tscn")
 var bullet_instance
-var health = 30
+var max_health =30
+var health 
 var score = 0
 var zoomed = false
 var target_fov = 75.0
@@ -22,6 +23,7 @@ signal player_hit
 @onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
 func _ready():
+	health = max_health
 	previous = 0.0
 	weapon = "axe"
 	score = 0

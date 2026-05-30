@@ -1339,6 +1339,25 @@ offset_bottom = 538.0
 theme_override_font_sizes/font_size = 50
 text = "View Bobbing"
 
+[node name="Controls" type="Label" parent="UI" unique_id=86007607]
+layout_mode = 0
+offset_left = 1401.0
+offset_top = 285.0
+offset_right = 1888.0
+offset_bottom = 920.0
+theme_override_font_sizes/font_size = 40
+text = "Controls:
+Jump : Space
+Forward : W
+Backward : S
+Left : A
+Right : D
+Shoot : Mouse Left Click
+Reload : R
+Switch Weapons : 1 and 2
+Menu : Esc
+Next Wave : Enter"
+
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]

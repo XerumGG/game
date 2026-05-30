@@ -7,6 +7,10 @@ extends Node3D
 @onready var restart = $UI/Restart
 @onready var bullets = $UI/Bullets
 @onready var resume = $UI/Resume
+@onready var label: Label = $UI/Label
+@onready var rooms: CSGCombiner3D = $NavigationRegion3D/Rooms
+@onready var spawn_markers: Node3D = $NavigationRegion3D/Rooms/SpawnMarkers
+
 
 signal wave_over
 
@@ -58,7 +62,7 @@ func spawn_zombie() -> void:
 		while wait:
 			await get_tree().process_frame
 		
-		var markers = $NavigationRegion3D/Rooms/SpawnMarkers.get_children()
+		var markers = spawn_markers.get_children()
 		var valid_markers = markers.filter(func(m): 
 			return m.global_position.distance_to(%Player.global_position) < SPAWN_RANGE
 		)
@@ -107,7 +111,7 @@ func reduce(pos):
 func drop(pos):
 	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
-		pickup.type = "heal" if $Player/Camera3D/Rifle.max_capacity > 20 else "mag"
+		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
 		pickup.global_position = pos + Vector3(0, 2, 0)
 
@@ -127,32 +131,42 @@ func _on_hitbox_body_exited(body: Node3D) -> void:
 		else:
 			body.persistance = true
 
+#Handles waves
+func _on_wave_over() -> void:
+	await get_tree().create_timer(1.0).timeout
+	label.visible = false
+	var nearest = rooms.get_min_dist(rooms.poss,rooms.closest)
+	var pickup = PICKUP.instantiate()
+	if level == 1:
+		pickup.position = rooms.poss[nearest]
+	else:
+		pickup.position = %Player.global_position + (randf_range(1,3)*Vector3(sin(randf_range(0,TAU)),0,cos(randf_range(0,TAU))))
+	pickup.type = "heal_gain"
+	add_child(pickup)
+	await pickup.proceed
+
+	if level == 2 and wave == 4:
+		state = "win"
+		return
+	wave += 1
+	if wave <3:
+		$UI.start_countdown()
+		await get_tree().create_timer(4.0).timeout
+	wave_triggered = false
+	%Player.score = 0
+	state = "play"
+	resume_spawn()
+	spawn_zombie()
+
 func wave_handle():
-	if %Player.score >= (10*level) and !wave_triggered:
+	if %Player.score >= (10*level) and !wave_triggered and level<=3:
 		wave_triggered = true
 		state = "intermidiate"
 		pause_spawn()
 		clear_zombies()
-		$UI/Label.visible = true
-		$UI/Label.text = "Wave " + str(wave) + " Over"
+		label.visible = true
+		label.text = "Wave " + str(wave) + " Over"
 		emit_signal("wave_over")
-
-func level_handle():
-	if level == 1:
-		$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,0,6)
-		spawn_cap = 20
-		dif = 10
-		if wave > 3 and !wave_triggered:
-			wave_triggered = true
-			state = "level_transition"
-			pause_spawn()
-			clear_zombies()
-			$UI/Label.visible = true
-			$UI/Label.text = "Level 1 Complete"
-	elif level == 2:
-		$NavigationRegion3D/Rooms/SpawnMarkers.position = Vector3(0,37,6)
-		spawn_cap = 35
-		dif = 20
 
 func state_machine():
 	match state:
@@ -167,10 +181,12 @@ func state_machine():
 			resume.visible = false
 			$UI/black.visible = true
 			$UI/PixilFrame0.visible = false
+			$UI/Controls.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"play":
 			$UI/CheckBox.visible = false
+			$UI/Controls.visible = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
 			hp_bar.visible = true
 			hp_ghost.visible = true
@@ -214,43 +230,27 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 
+#Handles Levels
+func level_handle():
+	if level == 1:
+		spawn_markers.position = Vector3(0,0,6)
+		spawn_cap = 20
+		dif = 10
+		if wave > 3 and !wave_triggered:
+			wave_triggered = true
+			state = "level_transition"
+			pause_spawn()
+			clear_zombies()
+			label.visible = true
+			label.label_settings.font_size = 100
+			label.text = "Level 1 Complete"
+	elif level == 2:
+		spawn_markers.position = Vector3(0,37,6)
+		spawn_cap = 35
+		dif = 20
 
-func _on_wave_over() -> void:
-	await get_tree().create_timer(1).timeout
-	$UI/Label.visible = false
-	while !Input.is_action_just_pressed("ui_accept"):
-		await get_tree().process_frame
-	if level == 1 and wave >= 3:
-		$UI.start_countdown()
-		await get_tree().create_timer(4.0).timeout
-		level = 2
-		wave = 1
-		%Player.health = 30
-		%Player.score = 0
-		spawned = 0
-		clear_zombies()
-		%Player.position = Vector3(2,40,-1)
-		wave_triggered = false
-		state = "play"
-		resume_spawn()
-		spawn_zombie()
-		return
-
-	if level == 2 and wave >= 3:
-		state = "win"
-		return
-	wave += 1
-	$UI.start_countdown()
-	await get_tree().create_timer(4.0).timeout
-	wave_triggered = false
-	%Player.score = 0
-	state = "play"
-	resume_spawn()
-	spawn_zombie()
-		
 func level_transition():
-	$UI.start_countdown()
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	level = 2
 	wave = 1
 	%Player.health = 30
@@ -259,6 +259,8 @@ func level_transition():
 	%Player.position = Vector3(2,40,-1)
 	wave_triggered = false
 	state = "play"
+	label.visible = false
+	label.label_settings.font_size = 300
 	resume_spawn()
 	spawn_zombie()
 	level_loading = false

@@ -15,6 +15,7 @@ func  _process(delta: float) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 			$Score.position = Vector2(820.0,283.333)
+			$Controls.visible = true
 			$Restart.visible = true
 			$Resume.visible = true
 			$black.visible = true
