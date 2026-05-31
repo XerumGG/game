@@ -2,10 +2,14 @@ extends Control
 @onready var main = $".."
 var counting_down = false
 var old_state
+var hide
 
 func _ready() -> void:
 	$CheckBox.button_pressed = true
 	%Player.bob_enabled = $CheckBox.button_pressed
+	
+	$CheckBox2.button_pressed = true
+	hide = $CheckBox2.button_pressed
 
 func  _process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc"):
@@ -21,6 +25,7 @@ func  _process(delta: float) -> void:
 			$black.visible = true
 			$HP.visible = false
 			$HP2.visible = false
+			$CheckBox2.visible = true
 			$Bullets.visible = false
 			$HP2_ghost.visible = false
 			$PixilFrame0.visible = false
@@ -66,3 +71,7 @@ func start_countdown():
 		return
 	counting_down = true
 	countdown()
+
+
+func _on_check_box_2_toggled(toggled_on: bool) -> void:
+	hide = toggled_on

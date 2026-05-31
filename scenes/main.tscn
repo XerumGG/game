@@ -113,6 +113,67 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_sugp2")
 
+[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 0)
+use_collision = true
+size = Vector3(20, 10, 20)
+material = ExtResource("1_0wfyh")
+
+[node name="f1r" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1168504386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="f1w1" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1597721709]
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, -9.9, 9.4, 0)
+size = Vector3(0.2, 8, 20)
+
+[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w1" unique_id=1616493981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+operation = 2
+size = Vector3(0.2, 5, 4)
+
+[node name="f1w2" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=526818408]
+transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 9.900001, 9.4, 0)
+size = Vector3(0.2, 8, 20)
+
+[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w2" unique_id=718725709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+operation = 2
+size = Vector3(0.2, 5, 4)
+
+[node name="f1w3" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1141518256]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1.1, 0, 1, 0, -4.371139e-08, -9.536743e-07, 9.4, -9.900001)
+size = Vector3(0.2, 8, 19.6)
+
+[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w3" unique_id=1248754399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+operation = 2
+size = Vector3(0.2, 5, 4)
+
+[node name="f1w4" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=2064824367]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1.1, 0, 1, 0, -4.371139e-08, -9.536743e-07, 9.4, 9.9)
+size = Vector3(0.2, 8, 19.6)
+
+[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w4" unique_id=2021420959]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+operation = 2
+size = Vector3(0.2, 5, 4)
+
+[node name="hitbox" parent="NavigationRegion3D/Rooms/f1" unique_id=2094235572 instance=ExtResource("4_jyhfs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, 0)
+
+[node name="torch" type="OmniLight3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1879461156]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 10.200001, 0)
+light_color = Color(0.97, 0.63858336, 0.1746, 1)
+light_energy = 8.0
+light_bake_mode = 1
+shadow_enabled = true
+distance_fade_begin = 10.0
+omni_range = 12.5
+omni_attenuation = 0.505
+
 [node name="f2" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=557163517]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.600006, -4.9, 0)
@@ -582,67 +643,6 @@ size = Vector3(0.77, 0.8, 1.3199999)
 [node name="hitbox" parent="NavigationRegion3D/Rooms/f9" unique_id=1560619451 instance=ExtResource("4_jyhfs")]
 
 [node name="torch" type="OmniLight3D" parent="NavigationRegion3D/Rooms/f9" unique_id=244301987]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 10.200001, 0)
-light_color = Color(0.97, 0.63858336, 0.1746, 1)
-light_energy = 8.0
-light_bake_mode = 1
-shadow_enabled = true
-distance_fade_begin = 10.0
-omni_range = 12.5
-omni_attenuation = 0.505
-
-[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 0)
-use_collision = true
-size = Vector3(20, 10, 20)
-material = ExtResource("1_0wfyh")
-
-[node name="f1r" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1168504386]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9, 0)
-use_collision = true
-size = Vector3(20, 1, 20)
-
-[node name="f1w1" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1597721709]
-transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, -9.9, 9.4, 0)
-size = Vector3(0.2, 8, 20)
-
-[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w1" unique_id=1616493981]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
-operation = 2
-size = Vector3(0.2, 5, 4)
-
-[node name="f1w2" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=526818408]
-transform = Transform3D(1, 0, 0, 0, 1.1, 0, 0, 0, 1, 9.900001, 9.4, 0)
-size = Vector3(0.2, 8, 20)
-
-[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w2" unique_id=718725709]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
-operation = 2
-size = Vector3(0.2, 5, 4)
-
-[node name="f1w3" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1141518256]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1.1, 0, 1, 0, -4.371139e-08, -9.536743e-07, 9.4, -9.900001)
-size = Vector3(0.2, 8, 19.6)
-
-[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w3" unique_id=1248754399]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
-operation = 2
-size = Vector3(0.2, 5, 4)
-
-[node name="f1w4" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=2064824367]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1.1, 0, 1, 0, -4.371139e-08, -9.536743e-07, 9.4, 9.9)
-size = Vector3(0.2, 8, 19.6)
-
-[node name="f1w1d" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1/f1w4" unique_id=2021420959]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
-operation = 2
-size = Vector3(0.2, 5, 4)
-
-[node name="hitbox" parent="NavigationRegion3D/Rooms/f1" unique_id=2094235572 instance=ExtResource("4_jyhfs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, 0)
-
-[node name="torch" type="OmniLight3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1879461156]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 10.200001, 0)
 light_color = Color(0.97, 0.63858336, 0.1746, 1)
 light_energy = 8.0
@@ -1340,6 +1340,16 @@ offset_bottom = 538.0
 theme_override_font_sizes/font_size = 50
 text = "View Bobbing"
 
+[node name="CheckBox2" type="CheckBox" parent="UI" unique_id=191901669]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 527.0
+offset_right = 492.0
+offset_bottom = 604.0
+theme_override_font_sizes/font_size = 50
+text = "HUD
+"
+
 [node name="Controls" type="Label" parent="UI" unique_id=86007607]
 layout_mode = 0
 offset_left = 1401.0
@@ -1364,6 +1374,9 @@ Next Wave : Enter"
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
 [connection signal="update_score" from="Player" to="." method="_on_player_update_score"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="NavigationRegion3D/Rooms/f1/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_f_10_body_exited"]
+[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f2/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f2/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f3/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
@@ -1381,9 +1394,6 @@ Next Wave : Enter"
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f9/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_8_body_exited"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_body_exited"]
-[connection signal="body_entered" from="NavigationRegion3D/Rooms/f1/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
-[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_f_10_body_exited"]
-[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D4/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D3/tp" to="Player" method="_on_tp_body_entered"]
@@ -1394,3 +1404,4 @@ Next Wave : Enter"
 [connection signal="pressed" from="UI/Resume" to="UI" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/Start" to="UI" method="_on_start_pressed"]
 [connection signal="toggled" from="UI/CheckBox" to="UI" method="_on_check_box_toggled"]
+[connection signal="toggled" from="UI/CheckBox2" to="UI" method="_on_check_box_2_toggled"]

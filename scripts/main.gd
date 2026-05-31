@@ -174,6 +174,7 @@ func wave_handle():
 func state_machine():
 	match state:
 		"start":
+			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
 			$UI/CheckBox.visible = true
@@ -188,19 +189,20 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"play":
+			$UI/CheckBox2.visible = false
 			$UI/CheckBox.visible = false
 			$UI/Controls.visible = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
-			hp_bar.visible = true
-			hp_ghost.visible = true
-			hp.visible = true
+			hp_bar.visible = $UI.hide
+			hp_ghost.visible = $UI.hide
+			hp.visible = $UI.hide
 			score_bar.visible = true
 			bullets.visible = true
 			restart.visible = false
 			resume.visible = false
 			$UI/black.visible = false
 			$UI/Start.visible = false
-			$UI/PixilFrame0.visible = true
+			$UI/PixilFrame0.visible = $UI.hide
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."
 			else:
@@ -210,6 +212,7 @@ func state_machine():
 			level_handle()
 			wave_handle()
 		"dead":
+			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
 			hp_ghost.visible = false
@@ -221,6 +224,7 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"win":
+			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
 			hp_ghost.visible = false
