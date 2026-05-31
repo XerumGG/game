@@ -47,6 +47,8 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	if $Player/Camera3D/Rifle.max_capacity ==0:
+		$Player/Camera3D/Rifle.max_capacity=15
 	if state == "level_transition" and !level_loading:
 		level_loading = true
 		level_transition()
@@ -250,7 +252,7 @@ func level_handle():
 		dif = 10
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
-			state = "level_transition"
+			state = "win"
 			pause_spawn()
 			clear_zombies()
 			label.visible = true
