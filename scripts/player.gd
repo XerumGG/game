@@ -25,7 +25,7 @@ signal player_hit
 func _ready():
 	health = max_health
 	previous = 0.0
-	weapon = "axe"
+	weapon = "gun"
 	score = 0
 	cam_base_pos = %Camera3D.position
 
@@ -39,7 +39,7 @@ func _unhandled_input(event):
 		)
 	if Input.is_action_just_pressed("1"):
 		weapon = "gun"
-	elif Input.is_action_just_pressed("2"):
+	elif Input.is_action_just_pressed("2") and $"..".level>1:
 		weapon = "axe"
 
 	match weapon:
@@ -104,8 +104,7 @@ func _physics_process(delta):
 		"gun":
 			%Rifle.visible = true
 			$Camera3D/Axe.visible = false
-			#$Camera3D/Axe/Area3D.monitoring = false
-			#Shooting
+
 			%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
 			if Input.is_action_pressed("shoot"):
 				if !gun_anim.is_playing():

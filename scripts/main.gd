@@ -109,11 +109,11 @@ func reduce(pos):
 		spawned -= 1
 
 func drop(pos):
-	if randi()%1 == 0:
+	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
 		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
-		pickup.global_position = pos + Vector3(0, 0.5, 0)
+		pickup.position = pos + Vector3(0, 0.5, 0)
 		await get_tree().create_timer(0.5).timeout
 
 func update_health():
@@ -236,6 +236,11 @@ func state_machine():
 			$UI/black.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
+		"intermidiate":
+			if $Player/Camera3D/Rifle.reloading:
+				bullets.text = "Reloading...."
+			else:
+				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
 
 #Handles Levels
 func level_handle():

@@ -1367,7 +1367,7 @@ Shoot : Mouse Left Click
 Reload : R
 Switch Weapons : 1 and 2
 Menu : Esc
-Next Wave : Enter"
+Sprint : Shift"
 
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
