@@ -29,6 +29,7 @@ func _on_detection_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		var main = $".."
 		var color_rect = $"../UI/ColorRect"
+		print(str(main.level)+" "+str(global_position)+" collected")
 		match type:
 			"heal":
 				body.health += 10
@@ -54,4 +55,4 @@ func _on_detection_body_entered(body: Node3D) -> void:
 		await get_tree().create_timer(0.2).timeout
 		color_rect.visible = false
 		color_rect.color = Color(0xff00008e)
-		queue_free()
+		call_deferred("queue_free")

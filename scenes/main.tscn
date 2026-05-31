@@ -844,12 +844,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3, 0, -78.55514)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
 material = ExtResource("1_0wfyh")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=983962350]
-transform = Transform3D(200.76321, 0, 0, 0, 1, 0, 0, 0, 168.3, 0, 36.602432, 0)
-use_collision = true
-collision_layer = 3
-collision_mask = 3
-
 [node name="Corridors" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1865471026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.300003, -4.9, -78.6)
 use_collision = true
@@ -1214,6 +1208,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/TP/CSGBox3D5/tp" unique_id=1949296288]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7, 19.299995)
 shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D" unique_id=983962350]
+transform = Transform3D(200.76321, 0, 0, 0, 1, 0, 0, 0, 168.3, 0, 36.602432, 0)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+material = ExtResource("1_0wfyh")
 
 [node name="UI" type="Control" parent="." unique_id=488969940]
 process_mode = 3

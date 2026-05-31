@@ -64,8 +64,9 @@ func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
 	var direction = (global_position - player.global_position).normalized()
 	knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
 	if health <= 0:
-		emit_signal("zombie_dead", global_position)
-		queue_free()
+		var death_pos = global_position
+		call_deferred("queue_free")
+		emit_signal("zombie_dead", death_pos)
 
 func flash_red():
 	if flash_timer:

@@ -109,11 +109,12 @@ func reduce(pos):
 		spawned -= 1
 
 func drop(pos):
-	if randi()%3 == 0:
+	if randi()%1 == 0:
 		var pickup = PICKUP.instantiate()
 		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
-		pickup.global_position = pos + Vector3(0, 2, 0)
+		pickup.global_position = pos + Vector3(0, 0.5, 0)
+		await get_tree().create_timer(0.5).timeout
 
 func update_health():
 	hp.text = "HP: " + str(%Player.health)
@@ -137,19 +138,21 @@ func _on_wave_over() -> void:
 	label.visible = false
 	var nearest = rooms.get_min_dist(rooms.poss,rooms.closest)
 	var pickup = PICKUP.instantiate()
-	if level == 1:
-		pickup.position = rooms.poss[nearest]
-	else:
-		pickup.position = %Player.global_position + (randf_range(1,3)*Vector3(sin(randf_range(0,TAU)),0,cos(randf_range(0,TAU))))
 	pickup.type = "heal_gain"
 	add_child(pickup)
+	if level == 1:
+		var pos = rooms.poss[nearest]
+		pickup.global_position = Vector3(pos.x, 0.5, pos.z)
+	else:
+		var angle = randf_range(0, TAU)
+		pickup.global_position = %Player.global_position + Vector3(sin(angle), 0, cos(angle)) * randf_range(1, 3)
 	await pickup.proceed
 
 	if level == 2 and wave == 4:
 		state = "win"
 		return
 	wave += 1
-	if wave <3:
+	if wave <=3:
 		$UI.start_countdown()
 		await get_tree().create_timer(4.0).timeout
 	wave_triggered = false
@@ -267,7 +270,7 @@ func level_transition():
 
 func clear_zombies():
 	for zombie in get_tree().get_nodes_in_group("enemy"):
-		zombie.queue_free()
+		zombie.call_deferred("queue_free")
 	spawned = 0
 	
 func pause_spawn():
